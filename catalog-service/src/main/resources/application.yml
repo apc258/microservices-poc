@@ -1,0 +1,19 @@
+server:
+  port: ${SERVER_PORT:8082}
+
+spring:
+  application:
+    name: catalog-service
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/catalog}
+    username: ${SPRING_DATASOURCE_USERNAME:catalog}
+    password: ${SPRING_DATASOURCE_PASSWORD:catalog}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true

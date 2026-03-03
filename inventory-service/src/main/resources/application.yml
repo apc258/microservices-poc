@@ -1,0 +1,36 @@
+server:
+  port: ${SERVER_PORT:8083}
+
+spring:
+  application:
+    name: inventory-service
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/inventory}
+    username: ${SPRING_DATASOURCE_USERNAME:inventory}
+    password: ${SPRING_DATASOURCE_PASSWORD:inventory}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: inventory-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    properties:
+      spring.json.trusted.packages: com.sabana.poc.inventory.infrasetructure.messaging
+      spring.json.use.type.headers: false
+      spring.json.value.default.type: com.sabana.poc.inventory.infraestructure.messaging.OrderCreatedEvent
+
+poc:
+  kafka:
+    topic:
+      order-created: ${POC_KAFKA_TOPIC_ORDER_CREATED:order.created}
